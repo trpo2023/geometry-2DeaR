@@ -28,7 +28,7 @@ TEST_OBJ = $(OBJ_DIR)/geometry-test/parser_test.o $(OBJ_DIR)/geometry-test/main.
 DEPS = $(APP_OBJECTS:.o=.d) $(LIB_OBJECTS:.o=.d)
 
 .PHONY: all clean run test
-all: clean $(LIB_PATH) test $(APP_PATH)
+all: $(LIB_PATH) test $(APP_PATH)
 
 -include $(DEPS)
 
@@ -44,7 +44,7 @@ $(OBJ_DIR)/geometry-test/main.o: $(TEST_DIR)/main.c
 $(OBJ_DIR)/geometry-test/parser_test.o: $(TEST_DIR)/parser_test.c
 	$(CC) $(CFLAGS) -c $< -Ithirdparty -I$(SRC_DIR) -L$(BIN_DIR) -lgeometry -o $@
 
-test: $(LIB_TARGET) $(TEST_PATH)
+test: $(LIB_PATH) $(TEST_PATH)
 	./$(TEST_PATH)		
 
 $(LIB_PATH): $(LIB_OBJECTS)
