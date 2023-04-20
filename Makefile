@@ -28,13 +28,12 @@ TEST_OBJ = $(OBJ_DIR)/geometry-test/parser_test.o $(OBJ_DIR)/geometry-test/main.
 DEPS = $(APP_OBJECTS:.o=.d) $(LIB_OBJECTS:.o=.d)
 
 .PHONY: all clean run test
-all: $(LIB_PATH) test $(APP_PATH)
+all: clean $(LIB_PATH) test $(APP_PATH)
 
 -include $(DEPS)
 
 $(APP_PATH): $(APP_OBJECTS) $(LIB_PATH)
 	$(CC) $(CFLAGS) $(GDB) $(CPPFLAGS) $^ -o $@ -lm
-
 
 $(TEST_PATH) : $(TEST_OBJ)
 	$(CC) $(CFLAGS) $^ -o  $@
