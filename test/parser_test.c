@@ -1,6 +1,6 @@
-#include <ctest.h>
 #include <libgeometry/parser.c>
 #include <libgeometry/parser.h>
+#include <../thirdparty/ctest.h>
 
 CTEST(ctest, check_perimetr)
 {

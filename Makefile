@@ -27,21 +27,14 @@ TEST_OBJ = $(OBJ_DIR)/geometry-test/parser_test.o $(OBJ_DIR)/geometry-test/main.
 
 DEPS = $(APP_OBJECTS:.o=.d) $(LIB_OBJECTS:.o=.d)
 
-.PHONY: all clean run
-all: $(APP_PATH) 
+.PHONY: all clean run test
+all: $(LIB_PATH) test $(APP_PATH)
 
 -include $(DEPS)
 
 $(APP_PATH): $(APP_OBJECTS) $(LIB_PATH)
 	$(CC) $(CFLAGS) $(GDB) $(CPPFLAGS) $^ -o $@ -lm
 
-$(LIB_PATH): $(LIB_OBJECTS)
-	ar rcs $@ $^
-
-$(OBJ_DIR)/%.o: %.c
-	$(CC) -c $(CFLAGS) $(GDB) $(CPPFLAGS) $< -o $@ 
-run:
-	./$(APP_PATH)
 
 $(TEST_PATH) : $(TEST_OBJ)
 	$(CC) $(CFLAGS) $^ -o  $@
@@ -53,7 +46,15 @@ $(OBJ_DIR)/geometry-test/parser_test.o: $(TEST_DIR)/parser_test.c
 	$(CC) $(CFLAGS) -c $< -Ithirdparty -I$(SRC_DIR) -L$(BIN_DIR) -lgeometry -o $@
 
 test: $(LIB_TARGET) $(TEST_PATH)
-	./$(TEST_PATH)	
+	./$(TEST_PATH)		
+
+$(LIB_PATH): $(LIB_OBJECTS)
+	ar rcs $@ $^
+
+$(OBJ_DIR)/%.o: %.c
+	$(CC) -c $(CFLAGS) $(GDB) $(CPPFLAGS) $< -o $@ 
+run:
+	./$(APP_PATH)
 
 clean:
 	@rm -f  $(APP_PATH) $(LIB_PATH) $(LIB_OBJECTS) $(APP_OBJECTS) $(DEPS)
