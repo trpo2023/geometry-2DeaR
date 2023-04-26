@@ -35,7 +35,7 @@ all: $(LIB_PATH) test $(APP_PATH)
 $(APP_PATH): $(APP_OBJECTS) $(LIB_PATH)
 	$(CC) $(CFLAGS) $(GDB) $(CPPFLAGS) $^ -o $@ -lm
 
-$(TEST_PATH) : $(TEST_OBJ)
+$(TEST_PATH) : $(TEST_OBJ) $(LIB_PATH)
 	$(CC) $(CFLAGS) $^ -o  $@
 
 $(OBJ_DIR)/geometry-test/main.o: $(TEST_DIR)/main.c
